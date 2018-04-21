@@ -4,8 +4,7 @@ services:
     container_name: registry
     image: registry:2
     ports:
-      # - 127.0.0.1:5000:5000
-      - 5000:5000
+      - 127.0.0.1:5000:5000
     volumes:
       - ./registry.yml:/etc/docker/registry/config.yml
     environment:
@@ -15,8 +14,7 @@ services:
     container_name: manager
     image: snagles/docker-registry-manager:latest
     ports:
-      # - 127.0.0.1:80:80
-      - 80:80
+      - 127.0.0.1:80:80
     volumes:
       - ./manager.yml:/app/registries.yml
     links:
@@ -24,3 +22,15 @@ services:
     environment:
       - MANAGER_PORT=80
       - MANAGER_REGISTRIES=/app/registries.yml
+
+  proxy:
+    container_name: proxy
+    image: nginx:alpine
+    ports:
+      - 5001:5001
+      - 8080:8080
+    links:
+      - registry:registry
+      - manager:manager
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf

@@ -1,0 +1,19 @@
+version: 0.1
+log:
+  accesslog:
+    disabled: true
+  level: debug
+  formatter: text
+  fields:
+    service: registry
+    environment: staging
+loglevel: debug
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+    maxthreads: 100
+http:
+  addr: localhost:5000
+  host: http://localhost:5000
+  debug:
+    addr: localhost:5001

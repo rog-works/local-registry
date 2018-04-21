@@ -2,21 +2,25 @@ version: '3'
 services:
   registry:
     container_name: registry
-    image: registry
+    image: registry:2
     ports:
-      127.0.0.1:5000:5000
+      # - 127.0.0.1:5000:5000
+      - 5000:5000
     volumes:
-      - registry.yml:/etc/docker/xxx.yml
+      - ./registry.yml:/etc/docker/registry/config.yml
+    environment:
+      - REGISTRY_HTTP_ADDR=0.0.0.0:5000
 
   manager:
     container_name: manager
-    image: snagles/docker-registry-manager
+    image: snagles/docker-registry-manager:latest
     ports:
-      - 127.0.0.1:80:80
+      # - 127.0.0.1:80:80
+      - 80:80
     volumes:
-      - manager.yml:/app/registries.yml
+      - ./manager.yml:/app/registries.yml
     links:
       - registry:registry
-    enviroment:
+    environment:
       - MANAGER_PORT=80
       - MANAGER_REGISTRIES=/app/registries.yml

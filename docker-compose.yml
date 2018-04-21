@@ -6,6 +6,7 @@ services:
     ports:
       - 127.0.0.1:5000:5000
     volumes:
+      - registry-data:/var/lib/registry
       - ./registry.yml:/etc/docker/registry/config.yml
     environment:
       - REGISTRY_HTTP_ADDR=0.0.0.0:5000
@@ -34,3 +35,7 @@ services:
       - manager:manager
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+
+volumes:
+  registry-data:
+    driver: local

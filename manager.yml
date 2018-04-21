@@ -1,0 +1,9 @@
+registries:
+  localRegistry:
+    url: http://registry
+    port: 5000
+    username: exampleUser
+    password: examplePassword
+    refresh-rate: "60s"
+    skip-tls-validation: true
+    dockerhub-integration: true
